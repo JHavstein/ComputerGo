@@ -27,15 +27,10 @@ public class XYCoordinate implements Coordinate {
 
     @Override
     public boolean checkBoundaries(int xSize, int ySize) {
-        if (this.x <= xSize && this.y <= ySize){ // x-coordinate is > xSize-1
+        if (this.x <= xSize && this.y <= ySize && this.x >= 0 && this.y >= 0) { // x-coordinate is > xSize-1
             return true;
         }
-        else if (this.x < 0 || this.y < 0){ // either x or y is negative
-            return false; // input error
-        }
-        else {
-            return false;
-        }
+        return false;
     }
 
     @Override
