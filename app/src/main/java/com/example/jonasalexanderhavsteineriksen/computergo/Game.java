@@ -6,6 +6,8 @@ public interface Game {
     /** title of the game */
     String getTitle();
 
+    void checkLiberty();
+
     /** horizontal size of the board */
     int getHorizontalSize();
 

@@ -32,6 +32,10 @@ public class GoGame implements Game {
         this.moveCounter = 0;
     }
 
+    private void checkLiberty(){
+        this.board.checkBoard();
+    }
+
     @Override
     public String getTitle() {
         return "Computer Go";
