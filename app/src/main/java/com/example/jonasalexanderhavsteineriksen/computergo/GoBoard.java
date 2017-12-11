@@ -21,6 +21,10 @@ public class GoBoard {
     /** size of the (quadratic) board */
     private int size;
 
+    private int[][] chain;
+
+    private boolean liberty;
+
     /** constructor for creating a copy of the board
      * not needed in Part 1 - can be viewed as an example
      */
@@ -39,6 +43,7 @@ public class GoBoard {
         this.board = new int[this.getSize()][this.getSize()];
         this.board1Before = new int[this.getSize()][this.getSize()];
         this.board2before = new int[this.getSize()][this.getSize()];
+        this.chain = new int[this.size][this.size];
     }
 
     /** checks whether the board is free at the given position */
@@ -85,8 +90,8 @@ public class GoBoard {
     // should probably be deleted
     public int checkWinning(){
         //counters for the final number of stones the two players have on the board
-        int counterPlayer1=0;
-        int counterPlayer2=0;
+        int counterPlayer1 = 0;
+        int counterPlayer2 = 0;
         for (int i = 0; i < this.size; i++){
             for (int j = 0; j < this.size; j++){
                 if (this.board[j][i] == 1){
@@ -94,9 +99,6 @@ public class GoBoard {
                 }
                 else if (this.board[j][i] == 2){
                     counterPlayer2++;
-                }
-                else{
-                    ;
                 }
             }
         }
@@ -113,6 +115,54 @@ public class GoBoard {
             return 0;
         }
     }
+
+    public void checkBoard() {
+        // Iterates through the board, finds and captures chains.
+        for (int x = 0; x < this.size; x++) {
+            for (int y = 0; y < this.size; y++) {
+                Coordinate start = new XYCoordinate(x, y);
+                if (!isFree(start)) {
+                    this.liberty = false;
+                    int player = getPlayer(start);   // defines the player as the player in the start position
+                    findChain(start, player, chain); // find chain based on the player in the start position
+                    if (!this.liberty) {                  // if the chain has no liberties the chain is captured
+                        capture(this.board, this.chain);
+                    }
+                }
+            }
+        }
+    }
+
+    /** Method for finding a connected chain of a given player */
+    public int[][] findChain(Coordinate start, int player, int[][] chain) {
+        // Get the coordinates from the start position
+        int x = start.getX();
+        int y = start.getY();
+        // Check if this position is on the board, if it has the expected player and has not been visited before
+        if (start.checkBoundaries(this.size, this.size) && this.board[x][y] == player && chain[x][y] != 1) {
+            chain[x][y] = 1;  // save the position
+            // Check the neighbours in orthogonally-adjacent points
+            findChain(start.shift(1, 0), player, chain);
+            findChain(start.shift(-1, 0), player, chain);
+            findChain(start.shift(0, 1), player, chain);
+            findChain(start.shift(0, -1), player, chain);
+        } else if (this.board[x][y] == 0) {
+            this.liberty = true;
+        }
+        return chain;
+    }
+
+    /** Method for capturing chains */
+    public void capture(int[][] board, int[][] chain) {
+        for (int x = 0; x < this.size; x++) {
+            for (int y = 0; y < this.size; y++) {
+                if (chain[x][y] == 1) {
+                    this.board[x][y] = 0;
+                }
+            }
+        }
+    }
+
 
     /** getter for size of the board */
     public int getSize() {
