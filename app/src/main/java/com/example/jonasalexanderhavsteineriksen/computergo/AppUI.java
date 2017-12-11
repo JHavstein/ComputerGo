@@ -97,7 +97,6 @@ public class AppUI extends AppCompatActivity implements UserInterface {
                     });
                     row.addView(b);
                 }
-
                 layout.addView(row);
             }
             ScrollView2D sv = new ScrollView2D(this);

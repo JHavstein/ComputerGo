@@ -85,13 +85,12 @@ public class GoGame implements Game {
                     temp[j][i] = this.board.getPlayer(temp2);
                 }
             }
-            if (Arrays.deepEquals(temp, this.board.getBoard1Before())) {
+            if (Arrays.deepEquals(temp, this.board.getBoard2before())) {
                 return false;
             }
         }
             return true;
     }
-
 
     @Override
     public String getContent(Coordinate pos) {
@@ -141,6 +140,7 @@ public class GoGame implements Game {
             return false;
         }
     }
+
 
     @Override
     public void setUserInterface(UserInterface ui) {

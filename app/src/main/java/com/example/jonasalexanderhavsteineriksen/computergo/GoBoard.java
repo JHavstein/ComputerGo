@@ -41,7 +41,7 @@ public class GoBoard {
 
     /** constructor for creating an empty board for a given number of players */
     public GoBoard() {
-        this.size =  9; // hard coded board size - real size is 19 x 19
+        this.size =  5; // hard coded board size - real size is 19 x 19
         this.board = new int[this.getSize()][this.getSize()];
         this.board1Before = new int[this.getSize()][this.getSize()];
         this.board2before = new int[this.getSize()][this.getSize()];
@@ -193,7 +193,7 @@ public class GoBoard {
     /* * Updates the two board that store the state of the board one and
     two moves ago.
      */
-    private void updateBoards(){
+    public void updateBoards(){
         for (int i = 0; i < this.size; i++){
             for (int j = 0; j < this.size; j++){
                 this.board2before[j][i] = this.board1Before[j][i];
