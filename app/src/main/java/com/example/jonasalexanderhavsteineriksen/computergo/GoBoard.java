@@ -126,11 +126,12 @@ public class GoBoard {
                     int player = getPlayer(start);   // defines the player as the player in the start position
                     findChain(start, player, chain); // find chain based on the player in the start position
                     if (!this.liberty) {                  // if the chain has no liberties the chain is captured
-                        capture(this.board, this.chain);
+                        capture();
                     }
                 }
             }
         }
+        this.chain = new int[this.size][this.size];
     }
 
     /** Method for finding a connected chain of a given player */
@@ -139,7 +140,7 @@ public class GoBoard {
         int x = start.getX();
         int y = start.getY();
         // Check if this position is on the board, if it has the expected player and has not been visited before
-        if (start.checkBoundaries(this.size, this.size) && this.board[x][y] == player && chain[x][y] != 1) {
+        if (start.checkBoundaries(this.size-1, this.size-1) && this.board[x][y] == player && chain[x][y] != 1) {
             chain[x][y] = 1;  // save the position
             // Check the neighbours in orthogonally-adjacent points
             findChain(start.shift(1, 0), player, chain);
@@ -153,10 +154,10 @@ public class GoBoard {
     }
 
     /** Method for capturing chains */
-    public void capture(int[][] board, int[][] chain) {
+    public void capture() {
         for (int x = 0; x < this.size; x++) {
             for (int y = 0; y < this.size; y++) {
-                if (chain[x][y] == 1) {
+                if (this.chain[x][y] == 1) {
                     this.board[x][y] = 0;
                 }
             }

@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ComputerGo.iml" filepath="$PROJECT_DIR$/ComputerGo.iml" />
-      <module fileurl="file://C:\Users\jfasommer\Desktop\DM550\Projects\Project 2\Task 5 - GO\ComputerGo\ComputerGo.iml" filepath="C:\Users\jfasommer\Desktop\DM550\Projects\Project 2\Task 5 - GO\ComputerGo\ComputerGo.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\jfasommer\Desktop\DM550\Projects\Project 2\Task 5 - GO\ComputerGo\app\app.iml" filepath="C:\Users\jfasommer\Desktop\DM550\Projects\Project 2\Task 5 - GO\ComputerGo\app\app.iml" />
     </modules>
   </component>
 </project>

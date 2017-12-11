@@ -32,7 +32,7 @@ public class GoGame implements Game {
         this.moveCounter = 0;
     }
 
-    private void checkLiberty(){
+    public void checkLiberty(){
         this.board.checkBoard();
     }
 
