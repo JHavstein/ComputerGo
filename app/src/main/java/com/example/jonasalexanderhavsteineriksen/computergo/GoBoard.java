@@ -123,7 +123,7 @@ public class GoBoard {
 
     public void checkBoard() {
         // Iterates through the board, finds and captures chains.
-        if (GoGame.currentPlayer == 1) {
+        if (GoGame.currentPlayer == 1) {                         // check currentplayer
             for (player = 1; player < 3; player++) {
                 for (int x = 0; x < this.size; x++) {
                     for (int y = 0; y < this.size; y++) {
