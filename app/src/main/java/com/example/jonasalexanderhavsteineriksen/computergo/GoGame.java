@@ -10,7 +10,7 @@ import java.util.HashSet;
 public class GoGame implements Game {
 
     /** currently active player */
-    public int currentPlayer;
+    public static int currentPlayer;
 
     /** total number of players */
     public int numPlayers;
@@ -26,7 +26,7 @@ public class GoGame implements Game {
 
     /** constructor that gets the number of players */
     public GoGame() {
-        this.currentPlayer = 1;
+        currentPlayer = 1;
         this.numPlayers = 2;
         this.board = new GoBoard();
         this.moveCounter = 0;
@@ -45,23 +45,22 @@ public class GoGame implements Game {
     public void addMove(Coordinate pos) {
         // Increments move counter
         numberOfMoves();
-
         // boolean for whether the board is equal to the state two moves ago, i.e. two passes.
         boolean check = ((Arrays.deepEquals(this.board.getBoard(), this.board.getBoard1Before())) &&
                 (Arrays.deepEquals(this.board.getBoard(), this.getBoard2Before())));
-        if (this.board.getPlayer(pos) == this.currentPlayer) { //pass
-            if (this.currentPlayer == this.numPlayers) {
-                this.currentPlayer = 1;
+        if (this.board.getPlayer(pos) == currentPlayer) { //pass
+            if (currentPlayer == this.numPlayers) {
+                currentPlayer = 1;
              } else {
-                this.currentPlayer++;
+                currentPlayer++;
             }
         }
         else { // no pass - move is added
-            this.board.addMove(pos, this.currentPlayer);
-            if (this.currentPlayer == this.numPlayers) {
-                this.currentPlayer = 1;
+            this.board.addMove(pos, currentPlayer);
+            if (currentPlayer == this.numPlayers) {
+                currentPlayer = 1;
             } else {
-                this.currentPlayer++;
+                currentPlayer++;
             }
         }
             if (this.moveCounter > 2){
@@ -78,7 +77,7 @@ public class GoGame implements Game {
         } else {
             // makes copy of the board with a move added
             int[][] temp = new int[this.getHorizontalSize()][this.getVerticalSize()];
-            temp[pos.getX()][pos.getY()] = this.currentPlayer;
+            temp[pos.getX()][pos.getY()] = currentPlayer;
             for (int i = 0; i < this.getHorizontalSize(); i++) {
                 for (int j = 0; j < this.getVerticalSize(); j++) {
                     Coordinate temp2 = new XYCoordinate(j, i);
@@ -133,7 +132,7 @@ public class GoGame implements Game {
         // if cell == this player then also counted as free, becaus this means that
         // the player wants to pass
         if ((this.board.getPlayer(pos) == 0) ||
-                this.board.getPlayer(pos) == this.currentPlayer){
+                this.board.getPlayer(pos) == currentPlayer){
             return true;
         }
         else{
@@ -149,7 +148,7 @@ public class GoGame implements Game {
     }
 
     public String toString() {
-        return "Board before Player "+this.currentPlayer+" of "+this.numPlayers+"'s turn:\n"+this.board.toString();
+        return "Board before Player "+currentPlayer+" of "+this.numPlayers+"'s turn:\n"+this.board.toString();
     }
 
     @Override

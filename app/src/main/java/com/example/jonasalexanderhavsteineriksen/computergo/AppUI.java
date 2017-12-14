@@ -83,7 +83,7 @@ public class AppUI extends AppCompatActivity implements UserInterface {
                         @Override
                         public void onClick(View view) {
                             Coordinate pos = ((PosButton) view).pos;
-                            if (game.isFree(pos) /*&& game.checkKoRule(pos)  &&  game.checkLibety(pos)*/) { //Mangler checkLiberty
+                            if (game.isFree(pos) && game.checkKoRule(pos)) {
                                 game.addMove(pos);
                                 game.checkLiberty();
                                 for (PosButton button : buttons) {
