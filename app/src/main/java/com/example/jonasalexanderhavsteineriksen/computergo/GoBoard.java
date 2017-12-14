@@ -66,7 +66,7 @@ public class GoBoard {
      * checks that the player number is valid
      */
     public void addMove(Coordinate c, int player) {
-        updateBoards();
+        //updateBoards();
         if (c.checkBoundaries(this.size-1,this.size-1) && player > 0 && player <= this.size-1) {
             this.board[c.getX()][c.getY()] = player;
         }

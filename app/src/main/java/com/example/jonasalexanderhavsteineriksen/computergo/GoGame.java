@@ -71,6 +71,10 @@ public class GoGame implements Game {
         }
     }
 
+    public void updateTemporaryBoards(Coordinate pos){
+        this.board.updateBoards();
+    }
+
     /* Checks th KO rule */
     public boolean checkKoRule(Coordinate pos) {
         if (this.moveCounter < 2) {
