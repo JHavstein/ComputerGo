@@ -86,6 +86,7 @@ public class AppUI extends AppCompatActivity implements UserInterface {
                             if (game.isFree(pos) && game.checkKoRule(pos)) {
                                 game.addMove(pos);
                                 game.checkLiberty();
+                                game.updateTemporaryBoards(pos);
                                 for (PosButton button : buttons) {
                                     button.setText(game.getContent(button.pos));
                                 }

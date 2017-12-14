@@ -38,6 +38,8 @@ public interface Game {
 
     int numberOfPlayers();
 
+    void updateTemporaryBoards(Coordinate pos);
+
     boolean isFull();
 
 }
