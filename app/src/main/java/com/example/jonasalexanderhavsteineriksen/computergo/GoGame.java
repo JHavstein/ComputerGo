@@ -37,7 +37,7 @@ public class GoGame implements Game {
     }
 
     public void checkLiberty(){
-        this.board.checkBoard();
+        this.board.checkBoard(this.currentPlayer);
     }
 
     @Override

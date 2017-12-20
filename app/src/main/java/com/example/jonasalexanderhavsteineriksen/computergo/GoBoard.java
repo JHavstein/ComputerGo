@@ -129,9 +129,9 @@ public class GoBoard {
         }
     }
 
-    public void checkBoard() {
+    public void checkBoard(int CurrentPlayer) {
         // Iterates through the board, finds and captures chains.
-        if (GoGame.currentPlayer == 1) {                         // check currentplayer
+        if (CurrentPlayer == 1) {                         // check currentplayer
             for (player = 1; player < 3; player++) {
                 for (int x = 0; x < this.size; x++) {
                     for (int y = 0; y < this.size; y++) {
@@ -147,7 +147,7 @@ public class GoBoard {
                     }
                 }
             }
-        } else if (GoGame.currentPlayer == 2) {
+        } else if (CurrentPlayer == 2) {
             for (player = 2; player > 0; player--) {
                 for (int x = 0; x < this.size; x++) {
                     for (int y = 0; y < this.size; y++) {
