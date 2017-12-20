@@ -21,6 +21,9 @@ public class GoGame implements Game {
     /* Counts the number of moves so far */
     public int moveCounter;
 
+    /* Counts the number of consecutive passes */
+    public int passCounter;
+
     /** the gui for board games */
     public UserInterface ui;
 
@@ -30,6 +33,7 @@ public class GoGame implements Game {
         this.numPlayers = 2;
         this.board = new GoBoard();
         this.moveCounter = 0;
+        this.passCounter = 0;
     }
 
     public void checkLiberty(){
@@ -44,32 +48,31 @@ public class GoGame implements Game {
     @Override
     public void addMove(Coordinate pos) {
         // Increments move counter
-        numberOfMoves();
+        this.moveCounter++;
 
-        // boolean for whether the board is equal to the state two moves ago, i.e. two passes.
-        boolean check = ((Arrays.deepEquals(this.board.getBoard(), this.board.getBoard1Before())) &&
-                (Arrays.deepEquals(this.board.getBoard(), this.getBoard2Before())));
-        if (this.board.getPlayer(pos) == this.currentPlayer) { //pass
+        if (this.board.getPlayer(pos) != 0) { //pass
             if (this.currentPlayer == this.numPlayers) {
                 this.currentPlayer = 1;
              } else {
                 this.currentPlayer++;
             }
+            this.passCounter++; // incrementing pass counter
         }
         else { // no pass - move is added
             this.board.addMove(pos, this.currentPlayer);
+            this.passCounter = 0; // resetting pass counter
             if (this.currentPlayer == this.numPlayers) {
                 this.currentPlayer = 1;
             } else {
                 this.currentPlayer++;
             }
         }
-            if (this.moveCounter > 2){
-                if(check){ // two passes in a row - game ends
-                    checkResult();
+        // If two consecutive passes:
+        // GAME IS OVER
+        if (this.passCounter >= 2){
+            checkResult();
             }
         }
-    }
 
     public void updateTemporaryBoards(Coordinate pos){
         this.board.updateBoards();
@@ -82,18 +85,23 @@ public class GoGame implements Game {
         } else {
             // makes copy of the board with a move added
             int[][] temp = new int[this.getHorizontalSize()][this.getVerticalSize()];
-            temp[pos.getX()][pos.getY()] = this.currentPlayer;
             for (int i = 0; i < this.getHorizontalSize(); i++) {
                 for (int j = 0; j < this.getVerticalSize(); j++) {
                     Coordinate temp2 = new XYCoordinate(j, i);
-                    temp[j][i] = this.board.getPlayer(temp2);
+                    if (this.board.getPlayer(temp2) == this.currentPlayer){
+                        temp[j][i] = this.board.getPlayer(temp2);
+                    }
+                    else{
+                        temp[j][i] = 0;
+                    }
                 }
             }
-            if (Arrays.deepEquals(temp, this.board.getBoard2before())) {
+            temp[pos.getX()][pos.getY()] = this.currentPlayer;
+            if (Arrays.deepEquals(temp, this.board.getBoard2before(this.currentPlayer))) {
                 return false;
             }
         }
-            return true;
+        return true;
     }
 
     @Override
@@ -122,13 +130,9 @@ public class GoGame implements Game {
         if (winner > 0) {
             this.ui.showResult("Player "+winner+" wins!");
         }
-        else {
+        else{
             this.ui.showResult("This is a DRAW!");
         }
-    }
-
-    private void numberOfMoves(){
-        this.moveCounter++;
     }
 
     @Override
@@ -161,13 +165,6 @@ public class GoGame implements Game {
         return this.board.getBoard();
     }
 
-    public int[][] getBoard1Before(){
-        return this.board.getBoard1Before();
-    }
-
-    public int[][] getBoard2Before(){
-        return this.board.getBoard2before();
-    }
 
     @Override
     public int numberOfPlayers(){
@@ -176,6 +173,10 @@ public class GoGame implements Game {
 
     public boolean isFull(){
         return this.board.checkFull();
+    }
+
+    public int getPlayer(Coordinate pos){
+        return this.board.getPlayer(pos);
     }
 
 }

@@ -25,6 +25,8 @@ public interface Game {
     /** check if some player wins or it is a draw */
     void checkResult();
 
+    int getPlayer(Coordinate pos);
+
     /*Checks the KO rule*/
     boolean checkKoRule(Coordinate pos);
 

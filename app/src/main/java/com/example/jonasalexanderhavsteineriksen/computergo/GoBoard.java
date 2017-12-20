@@ -12,11 +12,17 @@ public class GoBoard {
      */
     private int[][] board;
 
-    /* State of the board before previous ove */
-    private int[][] board1Before;
+    /* State of player 1's pieces on the board before the the previous move */
+    private int[][] board1BeforePlayer1;
 
-    /* State of the board before the move before the previous move */
-    private int[][] board2before;
+    /* State of player 1's pieces on the board before the move before the previous move */
+    private int[][] board2beforePlayer1;
+
+    /* State of player 2's pieces on the board before the the previous move */
+    private int[][] board1BeforePlayer2;
+
+    /* State of player 2's pieces on the board before the the previous move */
+    private int[][] board2beforePlayer2;
 
     /** size of the (quadratic) board */
     private int size;
@@ -43,8 +49,10 @@ public class GoBoard {
     public GoBoard() {
         this.size =  5; // hard coded board size - real size is 19 x 19
         this.board = new int[this.getSize()][this.getSize()];
-        this.board1Before = new int[this.getSize()][this.getSize()];
-        this.board2before = new int[this.getSize()][this.getSize()];
+        this.board1BeforePlayer1 = new int[this.getSize()][this.getSize()];
+        this.board2beforePlayer1 = new int[this.getSize()][this.getSize()];
+        this.board1BeforePlayer2 = new int[this.getSize()][this.getSize()];
+        this.board2beforePlayer2 = new int[this.getSize()][this.getSize()];
         this.chain = new int[this.size][this.size];
         this.mark = new boolean[this.size][this.size];
     }
@@ -193,11 +201,19 @@ public class GoBoard {
     /* * Updates the two board that store the state of the board one and
     two moves ago.
      */
+
     public void updateBoards(){
         for (int i = 0; i < this.size; i++){
             for (int j = 0; j < this.size; j++){
-                this.board2before[j][i] = this.board1Before[j][i];
-                this.board1Before[j][i] = this.board[j][i];
+
+                // temporary boards reflecting player 1's position
+                this.board2beforePlayer1[j][i] = (this.board1BeforePlayer1[j][i] == 1) ? 1 : 0;
+                this.board1BeforePlayer1[j][i] = (this.board[j][i] == 1) ? 1 : 0; // because player 1
+
+                // temporary boards reflecting player 2's position
+                this.board2beforePlayer2[j][i] = (this.board1BeforePlayer2[j][i] == 2) ? 2 : 0;
+                this.board1BeforePlayer2[j][i] = (this.board[j][i] == 2) ? 2 : 0; // because player 2
+
             }
         }
     }
@@ -206,12 +222,22 @@ public class GoBoard {
         return this.board;
     }
 
-    public int[][] getBoard1Before(){
-        return this.board1Before;
+    public int[][] getBoard1Before(int player){
+        if (player == 1){
+            return this.board1BeforePlayer1;
+        }
+        else{
+            return this.board1BeforePlayer2;
+        }
     }
 
-    public int[][] getBoard2before(){
-        return this.board2before;
+    public int[][] getBoard2before(int player){
+        if (player == 1){
+            return this.board2beforePlayer1;
+        }
+        else{
+            return this.board2beforePlayer2;
+        }
     }
 
 }
