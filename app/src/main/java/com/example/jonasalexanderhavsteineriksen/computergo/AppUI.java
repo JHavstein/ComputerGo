@@ -83,16 +83,21 @@ public class AppUI extends AppCompatActivity implements UserInterface {
                         @Override
                         public void onClick(View view) {
                             Coordinate pos = ((PosButton) view).pos;
-                            if (game.isFree(pos) /*&& game.checkKoRule(pos)  &&  game.checkLibety(pos)*/) { //Mangler checkLiberty
+                            if (game.getPlayer(pos) != 0){ //pos
                                 game.addMove(pos);
-                                game.checkLiberty();
-                                game.updateTemporaryBoards(pos);
-                                for (PosButton button : buttons) {
-                                    button.setText(game.getContent(button.pos));
+                            }
+                            else {
+                                if (game.checkKoRule(pos)) { //Mangler checkLiberty
+                                    game.addMove(pos);
+                                    game.checkLiberty();
+                                    game.updateTemporaryBoards(pos);
+                                    for (PosButton button : buttons) {
+                                        button.setText(game.getContent(button.pos));
+                                    }
+
                                 }
                             }
-                            //checks if the two rules for making moves in Go are met
-                            //game.checkLiberty(game.getBoard()); //TODO
+
 
                         }
                     });

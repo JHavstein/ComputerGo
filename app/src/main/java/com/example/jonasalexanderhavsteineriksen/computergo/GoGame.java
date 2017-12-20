@@ -175,7 +175,7 @@ public class GoGame implements Game {
         return this.board.checkFull();
     }
 
-    public int getPlayer(Coordinate pos){
+    public int getPlayer(Coordinate pos) {
         return this.board.getPlayer(pos);
     }
 
