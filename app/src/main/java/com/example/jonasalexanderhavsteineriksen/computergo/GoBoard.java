@@ -33,6 +33,8 @@ public class GoBoard {
 
     private boolean liberty;
 
+    private int player;
+
     /** constructor for creating a copy of the board
      * not needed in Part 1 - can be viewed as an example
      */
@@ -129,16 +131,35 @@ public class GoBoard {
 
     public void checkBoard() {
         // Iterates through the board, finds and captures chains.
-        for (int x = 0; x < this.size; x++) {
-            for (int y = 0; y < this.size; y++) {
-                Coordinate start = new XYCoordinate(x, y);
-                if (!isFree(start)) {
-                    this.liberty = false;
-                    int[][] tmp = new int[this.size][this.size];
-                    int player = getPlayer(start);   // defines the player as the player in the start position
-                    tmp = findChain(start, player, tmp); // find chain based on the player in the start position
-                    if (this.liberty == false) {                  // if the chain has no liberties the chain is captured
-                        capture(player, tmp);
+        if (GoGame.currentPlayer == 1) {                         // check currentplayer
+            for (player = 1; player < 3; player++) {
+                for (int x = 0; x < this.size; x++) {
+                    for (int y = 0; y < this.size; y++) {
+                        Coordinate start = new XYCoordinate(x, y);
+                        if (!isFree(start)) {                    // check if the position is not free
+                            this.liberty = false;
+                            int[][] tmp = new int[this.size][this.size];
+                            tmp = findChain(start, player, tmp); // find chain based on the player in the start position
+                            if (this.liberty == false) {         // if the chain has no liberties the chain is captured
+                                capture(player, tmp);
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (GoGame.currentPlayer == 2) {
+            for (player = 2; player > 0; player--) {
+                for (int x = 0; x < this.size; x++) {
+                    for (int y = 0; y < this.size; y++) {
+                        Coordinate start = new XYCoordinate(x, y);
+                        if (!isFree(start)) {                    // check if the position is not free
+                            this.liberty = false;
+                            int[][] tmp = new int[this.size][this.size];
+                            tmp = findChain(start, player, tmp); // find chain based on the player in the start position
+                            if (this.liberty == false) {         // if the chain has no liberties the chain is captured
+                                capture(player, tmp);
+                            }
+                        }
                     }
                 }
             }
@@ -148,20 +169,20 @@ public class GoBoard {
 
     /** Method for finding a connected chain of a given player */
     public int[][] findChain(Coordinate start, int player, int[][] tmp) {
-        // Get the coordinates from the start position
+        // Get the coordinates from the start position, if the position is on the board.
         if (start.checkBoundaries(this.size-1, this.size - 1)) {
             int x = start.getX();
             int y = start.getY();
             // Check if this position is on the board, if it has the expected player and has not been visited before
-            if (start.checkBoundaries(this.size - 1, this.size - 1) && this.board[x][y] == player && this.chain[x][y] == 0) {
+            if (this.board[x][y] == player && this.chain[x][y] == 0) {
                 this.chain[x][y] = player;  // save the position
-                tmp[x][y] = player;  // save the position
-                // Check the neighbours in orthogonally-adjacent points
+                tmp[x][y] = player;         // save the position
+                // Check the neighbours in the orthogonally-adjacent points
                 findChain(start.shift(1, 0), player, tmp);
                 findChain(start.shift(-1, 0), player, tmp);
                 findChain(start.shift(0, 1), player, tmp);
                 findChain(start.shift(0, -1), player, tmp);
-            } else if (this.board[x][y] == 0) {
+            } else if (this.board[x][y] == 0) {  // check if the chain has a liberty
                 this.liberty = true;
             }
         }
