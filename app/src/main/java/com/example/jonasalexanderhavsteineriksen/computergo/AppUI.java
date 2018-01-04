@@ -28,7 +28,7 @@ public class AppUI extends AppCompatActivity implements UserInterface {
         layout.setOrientation(LinearLayout.VERTICAL);
         TextView tv = new TextView(this);
         tv.setText(
-        "To pass your turn: press one of your own fields" + '\n' + "Click OK to start the game!");
+        "To pass your turn: press one of the already occupied fields" + '\n' + "Click OK to start the game!");
         layout.addView(tv);
         Button b = new AppCompatButton(this);
         b.setText("OK");
