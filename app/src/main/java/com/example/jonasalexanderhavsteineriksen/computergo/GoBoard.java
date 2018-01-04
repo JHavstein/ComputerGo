@@ -47,7 +47,7 @@ public class GoBoard {
 
     /** constructor for creating an empty board for a given number of players */
     public GoBoard() {
-        this.size =  5; // hard coded board size - real size is 19 x 19
+        this.size =  11; // hard coded board size - real size is 19 x 19
         this.board = new int[this.getSize()][this.getSize()];
         this.board1BeforePlayer1 = new int[this.getSize()][this.getSize()];
         this.board2beforePlayer1 = new int[this.getSize()][this.getSize()];
