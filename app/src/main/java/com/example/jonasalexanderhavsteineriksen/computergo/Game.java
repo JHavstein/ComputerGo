@@ -30,18 +30,9 @@ public interface Game {
     /*Checks the KO rule*/
     boolean checkKoRule(Coordinate pos);
 
-    /** returns true, if and only if, the position is free */
-    boolean isFree(Coordinate pos);
 
     /** provide a user interface to the game */
     void setUserInterface(UserInterface ui);
 
-    int[][] getBoard();
-
-    int numberOfPlayers();
-
     void updateTemporaryBoards(Coordinate pos);
-
-    boolean isFull();
-
 }

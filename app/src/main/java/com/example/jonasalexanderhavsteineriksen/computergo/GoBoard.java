@@ -29,8 +29,6 @@ public class GoBoard {
 
     private int[][] chain;
 
-    private boolean[][] mark;
-
     private boolean liberty;
 
     private int player;
@@ -56,7 +54,6 @@ public class GoBoard {
         this.board1BeforePlayer2 = new int[this.getSize()][this.getSize()];
         this.board2beforePlayer2 = new int[this.getSize()][this.getSize()];
         this.chain = new int[this.size][this.size];
-        this.mark = new boolean[this.size][this.size];
     }
 
     /** checks whether the board is free at the given position */
@@ -83,18 +80,6 @@ public class GoBoard {
         else {
             throw new IllegalArgumentException("Error");
         }
-    }
-
-    /** returns true if, and only if, there are no more free positions on the board */
-    // Could be deleted?
-    public boolean checkFull() {
-        for (int x = 0; x < this.size; x++) {
-            for (int y = 0; y < this.size; y++) {
-                if (this.board[x][y] == 0)
-                    return false;
-            }
-        }
-        return true;
     }
 
     /** returns 0 if no player has won (yet)
@@ -140,7 +125,7 @@ public class GoBoard {
                             this.liberty = false;
                             int[][] tmp = new int[this.size][this.size];
                             tmp = findChain(start, player, tmp); // find chain based on the player in the start position
-                            if (this.liberty == false) {         // if the chain has no liberties the chain is captured
+                            if (!this.liberty) {         // if the chain has no liberties the chain is captured
                                 capture(player, tmp);
                             }
                         }
@@ -156,7 +141,7 @@ public class GoBoard {
                             this.liberty = false;
                             int[][] tmp = new int[this.size][this.size];
                             tmp = findChain(start, player, tmp); // find chain based on the player in the start position
-                            if (this.liberty == false) {         // if the chain has no liberties the chain is captured
+                            if (!this.liberty) {         // if the chain has no liberties the chain is captured
                                 capture(player, tmp);
                             }
                         }
@@ -236,19 +221,6 @@ public class GoBoard {
                 this.board1BeforePlayer2[j][i] = (this.board[j][i] == 2) ? 2 : 0; // because player 2
 
             }
-        }
-    }
-
-    public int[][] getBoard(){
-        return this.board;
-    }
-
-    public int[][] getBoard1Before(int player){
-        if (player == 1){
-            return this.board1BeforePlayer1;
-        }
-        else{
-            return this.board1BeforePlayer2;
         }
     }
 

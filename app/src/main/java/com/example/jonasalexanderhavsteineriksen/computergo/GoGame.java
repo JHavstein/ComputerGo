@@ -1,8 +1,6 @@
 package com.example.jonasalexanderhavsteineriksen.computergo;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.HashSet;
 
 /** main class creating a board and the GUI
  * defines the game play
@@ -136,21 +134,6 @@ public class GoGame implements Game {
     }
 
     @Override
-    public boolean isFree(Coordinate pos) {
-        // if 0 then cell is free
-        // if cell == this player then also counted as free, becaus this means that
-        // the player wants to pass
-        if ((this.board.getPlayer(pos) == 0) ||
-                this.board.getPlayer(pos) == this.currentPlayer){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-
-    @Override
     public void setUserInterface(UserInterface ui) {
         this.ui = ui;
 
@@ -161,19 +144,6 @@ public class GoGame implements Game {
     }
 
     @Override
-    public int[][] getBoard(){
-        return this.board.getBoard();
-    }
-
-
-    @Override
-    public int numberOfPlayers(){
-        return this.numPlayers;
-    }
-
-    public boolean isFull(){
-        return this.board.checkFull();
-    }
 
     public int getPlayer(Coordinate pos) {
         return this.board.getPlayer(pos);

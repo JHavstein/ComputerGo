@@ -4,16 +4,16 @@ package com.example.jonasalexanderhavsteineriksen.computergo;
 public interface Coordinate {
 
     /** getter for the x value */
-    public int getX();
+    int getX();
 
     /** getter for the y value */
-    public int getY();
+    int getY();
 
     /** check whether this position is valid for the given board size */
-    public boolean checkBoundaries(int xSize, int ySize);
+    boolean checkBoundaries(int xSize, int ySize);
 
     /** move the position by dx to the right and by dy down */
-    public Coordinate shift(int dx, int dy);
+    Coordinate shift(int dx, int dy);
 
 }
 
